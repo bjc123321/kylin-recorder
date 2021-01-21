@@ -1,3 +1,9 @@
+kylin-recorder (1.2.19) v101; urgency=medium
+
+  * 修复bug#34793 设置界面边角显示黑色问题
+
+ -- baijincheng <baijincheng@kylinos.cn>  Thu, 21 Jan 2021 20:25:00 +0800
+
 kylin-recorder (1.2.18) v101; urgency=medium
 
   * 内测时，修复raw文件路径设置错误的问题

@@ -170,9 +170,10 @@ Settings::Settings(QWidget *parent) : QMainWindow(parent)
     mainWid->setLayout(mainLayout);
 //    mainWid->setStyleSheet("background-color:pink;");
     this->setCentralWidget(mainWid);
-
+    this->setObjectName("mainWid");
     this->setAttribute(Qt::WA_TranslucentBackground);//窗体透明
-    this->setStyleSheet("border-radius:6px;" );//主窗体圆角(注意：窗体透明与主窗体圆角要搭配使用否则无效)
+    this->setStyleSheet("#mainWid{border-radius:6px;}" );//主窗体圆角(注意：窗体透明与主窗体圆角要搭配使用否则无效)
+
     if(darkData->get("style-name").toString()=="ukui-dark"||darkData->get("style-name").toString() == "ukui-black")
     {
         closeButton->setIcon(QIcon(":/svg/svg/dark-window-close.svg"));
