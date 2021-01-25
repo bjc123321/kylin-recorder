@@ -383,14 +383,14 @@ void MainWindow::themeWindow(QString themeColor)
                                    "border-bottom-right-radius:0px;");
         //主界面
         mainWid->setObjectName("mainWid");//设置命名空间
-        mainWid->setStyleSheet("#mainWid{background-color:#141414;border:1px solid rgba(255,255,255,0.15);}");//自定义窗体(圆角+背景色)
+        mainWid->setStyleSheet("#mainWid{background-color:#141414;}");//自定义窗体(圆角+背景色)
         //mini主界面
         mini.miniWid->setStyleSheet(".Widget{background-color:#222222;}");//后期适配主题颜s;
 
 
         //设置界面
         set.mainWid->setObjectName("setMainWid");//设置命名空间
-        set.mainWid->setStyleSheet("#setMainWid{background-color:#131314;border:1px solid rgba(255,255,255,0.15);}");//自定义窗体(圆角+背景色)
+        set.mainWid->setStyleSheet("#setMainWid{background-color:#131314;}");//自定义窗体(圆角+背景色)
 
         rightMainWid->setStyleSheet(".QWidget{background-color:#141414;\
                                     border-top-left-radius:0px;\
@@ -424,7 +424,7 @@ void MainWindow::themeWindow(QString themeColor)
         //设置界面
         //主界面
         mainWid->setObjectName("mainWid");//设置命名空间
-        mainWid->setStyleSheet("#mainWid{background-color:#FFFFFF;border:1px solid rgba(0,0,0,0.15);}");//自定义窗体(圆角+背景色)
+        mainWid->setStyleSheet("#mainWid{background-color:#FFFFFF;}");//自定义窗体(圆角+背景色)
         recordButtonWid->setStyleSheet("background-color:#FFFFFF;opacity:0.1;");
         set.closeButton->setIcon(QIcon(":/svg/svg/window-close.svg"));
 

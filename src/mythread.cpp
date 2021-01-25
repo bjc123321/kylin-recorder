@@ -909,14 +909,21 @@ void MyThread::selectMp3()
     }
     else
     {
-        if( toConvertMp3( absolutionPath, (fileName+tr(".mp3")).toLocal8Bit().data() ) > 0 )
+        QString Home_path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        if(!fileName.contains(Home_path,Qt::CaseSensitive))
         {
-            //添加前要判断是否重复文件名
-            onChangeCurrentRecordList(endFileName);
-            listItemAdd(endFileName);
+            qDebug()<<"保存失败";
+            return;
+        }else{
+            if( toConvertMp3( absolutionPath, (fileName+tr(".mp3")).toLocal8Bit().data() ) > 0 )
+            {
+                //添加前要判断是否重复文件名
+                onChangeCurrentRecordList(endFileName);
+                listItemAdd(endFileName);
 
-            QMessageBox::information(NULL, tr("Save"), tr("Saved successfully:") + endFileName);
-        }
+                QMessageBox::information(NULL, tr("Save"), tr("Saved successfully:") + endFileName);
+            }
+         }
 
     }
     QTextCodec *code=QTextCodec::codecForName("gb2312");//解决中文路径保存
@@ -946,12 +953,19 @@ void MyThread::selectM4a()
     }
     else
     {
-        if( toConvertM4a( absolutionPath, (fileName+tr(".m4a")).toLocal8Bit().data() ) > 0 )
+        QString Home_path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        if(!fileName.contains(Home_path,Qt::CaseSensitive))
         {
-            onChangeCurrentRecordList(fileName+tr(".m4a"));
-            listItemAdd(fileName+tr(".m4a"));
+            qDebug()<<"保存失败";
+            return;
+        }else{
+            if( toConvertM4a( absolutionPath, (fileName+tr(".m4a")).toLocal8Bit().data() ) > 0 )
+            {
+                onChangeCurrentRecordList(fileName+tr(".m4a"));
+                listItemAdd(fileName+tr(".m4a"));
 
-            QMessageBox::information(NULL, tr("Save"), tr("Saved successfully:") + fileName);
+                QMessageBox::information(NULL, tr("Save"), tr("Saved successfully:") + fileName);
+            }
         }
 
     }
@@ -977,12 +991,19 @@ void MyThread::selectWav()
     }
     else
     {
-        if( addWavHeader( absolutionPath, (fileName+tr(".wav")).toLocal8Bit().data() ) > 0 )
+        QString Home_path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        if(!fileName.contains(Home_path,Qt::CaseSensitive))
         {
-            onChangeCurrentRecordList(fileName+tr(".wav"));
-            listItemAdd(fileName+tr(".wav"));
+            qDebug()<<"保存失败";
+            return;
+        }else{
+            if( addWavHeader( absolutionPath, (fileName+tr(".wav")).toLocal8Bit().data() ) > 0 )
+            {
+                onChangeCurrentRecordList(fileName+tr(".wav"));
+                listItemAdd(fileName+tr(".wav"));
 
-            QMessageBox::information(NULL, tr("Save"), tr("Saved successfully:") + fileName);
+                QMessageBox::information(NULL, tr("Save"), tr("Saved successfully:") + fileName);
+            }
         }
 
     }
