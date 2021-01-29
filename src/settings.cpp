@@ -192,8 +192,9 @@ Settings::Settings(QWidget *parent) : QMainWindow(parent)
 //        lineEdit->setStyleSheet("background-color:rgba(0,0,0,0.06);border-radius: 6px;height:36px;");
     }
 
-
-    this->move((QApplication::desktop()->width() -WIDTH)/3, (QApplication::desktop()->height() - HEIGHT)/3);
+    QScreen *screen = QGuiApplication::primaryScreen();
+    this ->move((screen->geometry().width() - WIDTH) / 2,(screen->geometry().height() - HEIGHT) / 2);
+//    this->move((QApplication::desktop()->width() -WIDTH)/3, (QApplication::desktop()->height() - HEIGHT)/3);
 
     if(Data->get("savedefault").toInt()==1)
     {

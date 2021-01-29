@@ -903,12 +903,22 @@ QString MyThread::isSameFileName(QString FileName)
 
 void MyThread::selectMp3()
 {
+
+    QString filename = fileName.mid(fileName.lastIndexOf("/") +1);
+    QString s = ".";
+    QString first_s = filename.at(0);
+
     if(fileName.length() == 0)
     {
 //        WrrMsg = new QMessageBox(QMessageBox::Warning, tr("Warning"), tr("You have not selected any storage location!"), QMessageBox::Ok );
 //        WrrMsg->button(QMessageBox::Ok)->setText(tr("OK"));
 //        WrrMsg->exec();
         return ;
+    }else if(first_s == s){
+        WrrMsg = new QMessageBox(QMessageBox::Warning, tr("Warning"), tr("Please do not name the file with . at the beginning!"), QMessageBox::Ok );//请不要以.开头为文件命名！
+        WrrMsg->button(QMessageBox::Ok)->setText(tr("OK"));
+        WrrMsg->exec();
+        return;
     }
     else
     {
@@ -949,11 +959,20 @@ void MyThread::selectMp3()
 }
 void MyThread::selectM4a()
 {
+    QString filename = fileName.mid(fileName.lastIndexOf("/") +1);
+    QString s = ".";
+    QString first_s = filename.at(0);
+
     if(fileName.length() == 0)
     {
 //        QMessageBox::information(NULL, tr("filename"), tr("You didn't select any files."));
         return ;
 
+    }else if(first_s == s){
+        WrrMsg = new QMessageBox(QMessageBox::Warning, tr("Warning"), tr("Please do not name the file with . at the beginning!"), QMessageBox::Ok );
+        WrrMsg->button(QMessageBox::Ok)->setText(tr("OK"));
+        WrrMsg->exec();
+        return;
     }
     else
     {
@@ -991,10 +1010,20 @@ void MyThread::selectM4a()
 }
 void MyThread::selectWav()
 {
+    QString filename = fileName.mid(fileName.lastIndexOf("/") +1);
+    QString s = ".";
+    QString first_s = filename.at(0);
+
     if(fileName.length() == 0)
     {
 //        QMessageBox::information(NULL, tr("filename"), tr("You didn't select any files."));
         return ;
+
+    }else if(first_s == s){
+        WrrMsg = new QMessageBox(QMessageBox::Warning, tr("Warning"), tr("Please do not name the file with . at the beginning!"), QMessageBox::Ok );
+        WrrMsg->button(QMessageBox::Ok)->setText(tr("OK"));
+        WrrMsg->exec();
+        return;
     }
     else
     {

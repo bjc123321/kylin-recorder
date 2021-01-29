@@ -33,6 +33,10 @@
 #include <QGSettings>
 #include <QMenu>
 #include <QAction>
+#include <QFile>
+#include <QDesktopServices>
+#include <QProcess>
+#include <QTextCodec>
 
 #include "mythread.h"
 #include "mywave.h"
@@ -53,6 +57,9 @@ public:
     QWidget *itemsWid;
     QWidget *mainWid;
     QHBoxLayout *mainLayout;
+
+    QString executeLinuxCmd(QString);
+    QString strResult1;
 
     QString itemsThemeColor;//主题颜色
     QLabel *listNum;//录音序号

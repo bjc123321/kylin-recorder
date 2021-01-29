@@ -427,7 +427,7 @@ void ItemsWindow::rightClickedMenuRequest()//右击弹出Menu菜单
     actionOpenFolder->setText(tr("Open folder position"));
 
     menu->addAction(actionSave);
-//    menu->addAction(actionOpenFolder);//2020/12/12禁用
+    menu->addAction(actionOpenFolder);//2020/12/12禁用
     menu->exec(QCursor::pos());
 
     menu->deleteLater();
@@ -466,7 +466,38 @@ void ItemsWindow::actionSaveasSlot()
 
 void ItemsWindow::actionOpenFolderSlot()
 {
-    qDebug()<<"打开文件路径!";
+
+    MyThread *my = new MyThread;//要用MyThread类的系统弹出框，由于ItemsWindowd的弹出框样式变了
+    QLabel *label = itemsWid->findChild<QLabel *>(recordFileName->objectName());
+    QStringList listRecordPath = my->readPathCollected().split(",");//先读取配置文件中的所有路径
+
+
+    int m = my->readNumList()-1;
+    for(int i=1;i<=m;i++)
+    {
+        QString str=listRecordPath.at(i);
+        if(str.contains(label->text()))
+        {
+            QFileInfo fi(str);
+            if(fi.exists())
+            {
+                QString path = str.mid(0,str.lastIndexOf("/"));
+                QDesktopServices::openUrl(QUrl::fromLocalFile(path));//打开本地文件，openUrl的QUrl::TolerantMode不能打开含有中文的路径
+            }
+            else
+            {
+                WrrMsg = new QMessageBox(QMessageBox::Warning,tr("Warning")
+                                         ,tr("The file path does not exist or has been deleted!"),QMessageBox::Yes );
+                WrrMsg->button(QMessageBox::Yes)->setText(tr("OK"));
+                WrrMsg->exec();
+//                MainWindow::mutual->list->takeItem(i-1);
+                return ;
+            }
+        }
+    }
+    my->deleteLater();
+
+
 }
 
 void ItemsWindow::slidePress() //滑动条鼠标按下
@@ -724,7 +755,15 @@ void ItemsWindow::delFile()//删除本地音频文件
                     MainWindow::mutual->list->takeItem(i-1);//删除操作
                     qDebug()<<"**********路径"<<i<<"存在，删除:"<<str;
                     MainWindow::mutual->isFileNull(MainWindow::mutual->list->count());//传item个数
-                    QFile::remove(str);//从本地删除
+
+                    QString Home_path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+                    strResult1 = executeLinuxCmd("mv " + str + ' '+Home_path+"/.local/share/Trash/files");
+
+
+//                    QFile::remove(str);//从本地删除
+
+
+
                 }
                 else
                 {
@@ -745,6 +784,16 @@ void ItemsWindow::delFile()//删除本地音频文件
 
     }
     return ;
+}
+
+QString ItemsWindow::executeLinuxCmd(QString strCmd)
+{
+    QProcess p;
+    p.start("bash", QStringList() <<"-c" << strCmd);
+    p.waitForFinished();
+    QString strResult = p.readAllStandardOutput();
+    qDebug()<<strResult;
+    return strResult;
 }
 
 void ItemsWindow::clipper()
