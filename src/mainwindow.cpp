@@ -201,10 +201,10 @@ MainWindow::MainWindow(QWidget *parent)
     thread->start();
     //qDebug()<<"子线程:";
     //点击关闭时把线程关掉
-    connect(closeButton,&QToolButton::clicked,[=](){
-        thread->quit();
-          thread->wait();
-    });
+//    connect(closeButton,&QToolButton::clicked,[=](){
+//        thread->quit();
+//          thread->wait();
+//    });
 //    this->setWindowFlags((Qt::FramelessWindowHint));//设置窗体无边框**加窗管协议后要将此注释调**
     setWindowTitle(tr("kylin-recorder"));
     lb=new QLabel(this);
@@ -233,7 +233,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(miniButton,   &QToolButton::clicked, this, &MainWindow::miniShow);//mini窗口
     connect(minButton,    &QToolButton::clicked, this, &MainWindow::minShow);//最小化窗口
     connect(maxButton,    &QToolButton::clicked, this, &MainWindow::maxShow);//最大化窗口
-    connect(closeButton,  &QToolButton::clicked, mainWid, &MainWindow::close);//关闭
+    connect(closeButton,  &QToolButton::clicked, this, &MainWindow::closeWindow);//关闭
+//    connect(closeButton,  &QToolButton::clicked, mainWid, &MainWindow::close);//关闭
     connect(recordButton, &QPushButton::clicked, this, &MainWindow::switchPage);//换页
     connect(actionSet,    &QAction::triggered,   this, &MainWindow::goset);//跳转设置界面
 
@@ -263,6 +264,26 @@ MainWindow::MainWindow(QWidget *parent)
 //    setMouseTracking(true);
 //    list->setMouseTracking(true);
     mainWid->show();
+}
+// 实现关闭之前判断是否正在录音
+void MainWindow::closeWindow()
+{
+
+    if (isRecording == True)
+    {
+        myThread->stop_saveDefault();
+        thread->quit();
+        thread->wait();
+        mainWid->close();
+
+    }else
+    {
+        thread->quit();
+        thread->wait();
+        mainWid->close();
+
+    }
+
 }
 // 实现键盘响应
 void MainWindow::keyPressEvent(QKeyEvent *event)

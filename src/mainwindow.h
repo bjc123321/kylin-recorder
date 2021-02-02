@@ -299,6 +299,9 @@ public slots:
     void miniShow();
     void minShow();
     void maxShow();
+    void closeWindow();
+
+
 
     void handlingSlot(bool isOk);
     void slotListItemAdd(QString fileName,int i);
